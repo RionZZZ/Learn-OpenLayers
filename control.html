@@ -9,6 +9,11 @@
     href="https://lib.baomitu.com/ol3/4.6.5/ol.css" rel="stylesheet">
   <script crossorigin="anonymous" integrity="sha384-207r7vJ98mMvHGcgRttnhkJLl6RU+DuD+ttp1G5k4ShCtw03LfZIIDNNWDGU8m2F"
     src="https://lib.baomitu.com/ol3/4.6.5/ol.js"></script>
+  <style>
+    .ol-zoomslider {
+      top: 7.5em;
+    }
+  </style>
 </head>
 
 <body>
@@ -26,7 +31,7 @@
     })
     // 初始化OL地图
     const map = new ol.Map({
-      target: "map", 
+      target: "map",
       layers: [amap],
       view: new ol.View({
         center: [114.30, 30.50],
@@ -34,6 +39,19 @@
         projection: "EPSG:4326"
       })
     })
+
+
+    // 视图跳转控件
+    const zoomToExtent = new ol.control.ZoomToExtent({
+      extent: [110, 30, 160, 30]
+    })
+    map.addControl(zoomToExtent)
+    // 缩放控件
+    const zoomSlider = new ol.control.ZoomSlider()
+    map.addControl(zoomSlider)
+    // 全屏控件
+    const fullScreen = new ol.control.FullScreen()
+    map.addControl(fullScreen)
   </script>
 </body>
 
