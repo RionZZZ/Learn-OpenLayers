@@ -9,12 +9,20 @@
     href="https://lib.baomitu.com/ol3/4.6.5/ol.css" rel="stylesheet">
   <script crossorigin="anonymous" integrity="sha384-207r7vJ98mMvHGcgRttnhkJLl6RU+DuD+ttp1G5k4ShCtw03LfZIIDNNWDGU8m2F"
     src="https://lib.baomitu.com/ol3/4.6.5/ol.js"></script>
+  <style>
+    .reset {
+      position: fixed;
+      z-index: 100;
+      top: 30px;
+      right: 50px;
+    }
+  </style>
 </head>
 
 <body>
   <div id="map">
-
   </div>
+  <button class="reset">reset</button>
   <script>
     // 初始化高德地图
     const amap = new ol.layer.Tile({
@@ -30,49 +38,34 @@
       layers: [amap],
       view: new ol.View({
         center: [114.30, 30.50],
-        zoom: 4,
+        zoom: 12,
         projection: "EPSG:4326"
       })
     })
 
-    const source = new ol.source.Vector({
-      url: "https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json",
-      format: new ol.format.GeoJSON()
-    })
+    const source = new ol.source.Vector({})
     const layer = new ol.layer.Vector({ source })
+    map.addLayer(layer);
 
-    const style = new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: [50, 50, 50, 0.4]
-      }),
-      stroke: new ol.style.Stroke({
-        width: 2,
-        color: "#ff226670"
+    // 点击事件
+    map.on("click", evt => {
+      console.log(evt);
+      const { coordinate } = evt;
+      const point = new ol.Feature({
+        geometry: new ol.geom.Point(coordinate)
       })
+      source.addFeature(point)
+
+      // 点击漫游
+      const view = map.getView()
+      view.animate({ center: coordinate })
     })
-    layer.setStyle(style)
 
-    map.addLayer(layer)
+    const reset = document.querySelector(".reset")
+    reset.onclick = () => {
+      map.getView().animate({ center: [114.30, 30.50], zoom: 6, duration: 3000 })
+    }
 
-
-    const source1 = new ol.source.Vector({
-      url: "https://geo.datav.aliyun.com/areas_v3/bound/420000_full.json",
-      format: new ol.format.GeoJSON()
-    })
-    const layer1 = new ol.layer.Vector({ source: source1 })
-
-    const style1 = new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: "#2266ff10"
-      }),
-      stroke: new ol.style.Stroke({
-        width: 2,
-        color: "#555"
-      })
-    })
-    layer1.setStyle(style1)
-
-    map.addLayer(layer1)
   </script>
 </body>
 
