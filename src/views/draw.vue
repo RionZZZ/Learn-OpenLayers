@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { Feature, Map, View } from "ol";
-import { Point } from "ol/geom";
+import { LineString, Point, Polygon } from "ol/geom";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
 import { transform } from "ol/proj";
@@ -17,6 +17,8 @@ onMounted(() => {
   initMap();
 
   addPoint();
+  addLine();
+  addArea();
 });
 const initMap = () => {
   const amap = new TileLayer({
@@ -36,7 +38,9 @@ const initMap = () => {
   });
 };
 
-const pointStyle = new Style({
+const style = new Style({
+  fill: new Fill({ color: "#0f0" }),
+  stroke: new Stroke({ color: "#00f", width: 2 }),
   image: new Circle({
     radius: 8,
     fill: new Fill({ color: "#f00" }),
@@ -47,8 +51,40 @@ const addPoint = () => {
   const point = new Feature({
     geometry: new Point(transform([114.3, 30.5], "EPSG:4326", "EPSG:3857"))
   });
-  point.setStyle(pointStyle);
+  point.setStyle(style);
   const source = new Vector({ features: [point] });
+  const layer = new VectorLayer({ source });
+  map.value.addLayer(layer);
+};
+const addLine = () => {
+  const line = new Feature({
+    geometry: new LineString([
+      transform([113.8, 30.6], "EPSG:4326", "EPSG:3857"),
+      transform([114.5, 30.6], "EPSG:4326", "EPSG:3857")
+    ])
+  });
+  line.setStyle(style);
+  const source = new Vector({ features: [line] });
+  const layer = new VectorLayer({ source });
+  map.value.addLayer(layer);
+};
+const addArea = () => {
+  const rect = new Feature({
+    geometry: new Polygon([
+      [
+        transform([113.9, 30.4], "EPSG:4326", "EPSG:3857"),
+        transform([114.3, 30.4], "EPSG:4326", "EPSG:3857"),
+        transform([114.5, 30.5], "EPSG:4326", "EPSG:3857")
+      ],
+      [
+        transform([113.1, 30.6], "EPSG:4326", "EPSG:3857"),
+        transform([114.1, 30.9], "EPSG:4326", "EPSG:3857"),
+        transform([114.3, 30.7], "EPSG:4326", "EPSG:3857")
+      ]
+    ])
+  });
+  rect.setStyle(style);
+  const source = new Vector({ features: [rect] });
   const layer = new VectorLayer({ source });
   map.value.addLayer(layer);
 };
