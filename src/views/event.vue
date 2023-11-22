@@ -46,7 +46,6 @@ const addEvent = () => {
   const layer = new VectorLayer({ source });
   map.value.addLayer(layer);
   map.value.on("click", (evt: any) => {
-    console.log(evt);
     const { coordinate } = evt;
     const point = new Feature({
       geometry: new Point(coordinate)

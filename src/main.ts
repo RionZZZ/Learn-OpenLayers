@@ -8,12 +8,14 @@ import Map from "./views/map.vue";
 import Draw from "./views/draw.vue";
 import Static from "./views/static.vue";
 import Event from "./views/event.vue";
+import Mark from "./views/mark.vue";
 
 const routes = [
   { path: "/map", component: Map },
   { path: "/draw", component: Draw },
   { path: "/static", component: Static },
-  { path: "/event", component: Event }
+  { path: "/event", component: Event },
+  { path: "/mark", component: Mark }
 ];
 const router = createRouter({
   history: createWebHashHistory(),
