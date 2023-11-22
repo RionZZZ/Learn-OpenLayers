@@ -7,11 +7,13 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Map from "./views/map.vue";
 import Draw from "./views/draw.vue";
 import Static from "./views/static.vue";
+import Event from "./views/event.vue";
 
 const routes = [
   { path: "/map", component: Map },
   { path: "/draw", component: Draw },
-  { path: "/static", component: Static }
+  { path: "/static", component: Static },
+  { path: "/event", component: Event }
 ];
 const router = createRouter({
   history: createWebHashHistory(),
