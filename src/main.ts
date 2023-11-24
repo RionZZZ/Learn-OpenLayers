@@ -11,6 +11,7 @@ import Event from "./views/event.vue";
 import Mark from "./views/mark.vue";
 import Popup from "./views/popup.vue";
 import Track from "./views/track.vue";
+import FreeDraw from "./views/free-draw.vue";
 
 const routes = [
   { path: "/map", component: Map },
@@ -19,7 +20,8 @@ const routes = [
   { path: "/event", component: Event },
   { path: "/mark", component: Mark },
   { path: "/popup", component: Popup },
-  { path: "/track", component: Track }
+  { path: "/track", component: Track },
+  { path: "/free-draw", component: FreeDraw }
 ];
 const router = createRouter({
   history: createWebHashHistory(),

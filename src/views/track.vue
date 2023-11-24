@@ -132,8 +132,6 @@ const move = (evt: RenderEvent) => {
 };
 
 const startMove = () => {
-  console.log("startMove");
-
   startTime.value = new Date().getTime();
   map.value.on("postcompose", move);
   // 第一次需要手动调用一遍，否则不执行postcompose
