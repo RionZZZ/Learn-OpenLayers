@@ -4,6 +4,8 @@
     <option value="LineString">LineString</option>
     <option value="Polygon">Polygon</option>
     <option value="Circle">Circle</option>
+    <option value="Square">Square</option>
+    <option value="Box">Box</option>
   </select>
   <div class="map" id="map" ref="myMap"></div>
 </template>
@@ -16,6 +18,7 @@ import { transform } from "ol/proj";
 import { Vector, XYZ } from "ol/source";
 import { onMounted, ref } from "vue";
 import { Draw, Modify, Snap } from "ol/interaction";
+import { createBox, createRegularPolygon } from "ol/interaction/Draw";
 
 const map = ref();
 const source = ref();
@@ -63,13 +66,31 @@ const initDrawLayer = () => {
 };
 
 const addInteractions = () => {
+  let geometryFunction;
+  let typeValue = type.value.value;
+  if (typeValue === "Square") {
+    typeValue = "Circle";
+    geometryFunction = createRegularPolygon(4);
+  } else if (typeValue === "Box") {
+    typeValue = "Circle";
+    geometryFunction = createBox();
+  }
   draw.value = new Draw({
     source: source.value,
-    type: type.value.value
+    type: typeValue,
+    geometryFunction
   });
   map.value.addInteraction(draw.value);
   snap.value = new Snap({ source: source.value });
   map.value.addInteraction(snap.value);
+  draw.value.on("drawend", (evt: any) => {
+    if (type.value.value === "Circle") {
+      console.log(evt.feature.getGeometry().getRadius());
+      console.log(evt.feature.getGeometry().getCenter());
+    } else {
+      console.log(evt.feature.getGeometry().getCoordinates());
+    }
+  });
 };
 
 const typeChange = () => {
