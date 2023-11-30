@@ -12,6 +12,7 @@ import Mark from "./views/mark.vue";
 import Popup from "./views/popup.vue";
 import Track from "./views/track.vue";
 import FreeDraw from "./views/free-draw.vue";
+import Cluster from "./views/cluster.vue";
 
 const routes = [
   { path: "/map", component: Map },
@@ -21,7 +22,8 @@ const routes = [
   { path: "/mark", component: Mark },
   { path: "/popup", component: Popup },
   { path: "/track", component: Track },
-  { path: "/free-draw", component: FreeDraw }
+  { path: "/free-draw", component: FreeDraw },
+  { path: "/cluster", component: Cluster }
 ];
 const router = createRouter({
   history: createWebHashHistory(),
