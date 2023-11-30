@@ -10,7 +10,7 @@ import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
 import { transform } from "ol/proj";
 import { Cluster, Vector, XYZ } from "ol/source";
-import { Circle, Fill, Stroke, Style, Text } from "ol/style";
+import { Circle, Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { onMounted, ref } from "vue";
 
 const map = ref();
@@ -57,23 +57,34 @@ const initCluster = () => {
     source: cluster,
     style: (feature) => {
       const size = feature.get("features").length;
-      const style = new Style({
-        image: new Circle({
-          radius: 10,
-          stroke: new Stroke({
-            color: "#fff"
+      let style;
+      if (size > 1) {
+        style = new Style({
+          image: new Circle({
+            radius: 10,
+            stroke: new Stroke({
+              color: "#fff"
+            }),
+            fill: new Fill({
+              color: "#3399CC"
+            })
           }),
-          fill: new Fill({
-            color: "#3399CC"
+          text: new Text({
+            text: size.toString(),
+            fill: new Fill({
+              color: "#fff"
+            })
           })
-        }),
-        text: new Text({
-          text: size.toString(),
-          fill: new Fill({
-            color: "#fff"
+        });
+      } else {
+        style = new Style({
+          image: new Icon({
+            src: "/src/assets/truck.png",
+            scale: 0.4
           })
-        })
-      });
+        });
+      }
+
       return style;
     }
   });
