@@ -4,6 +4,7 @@ import App from "./App.vue";
 import "ol/ol.css";
 import { createRouter, createWebHashHistory } from "vue-router";
 
+import Home from "./views/index.vue";
 import Map from "./views/map.vue";
 import Draw from "./views/draw.vue";
 import Static from "./views/static.vue";
@@ -15,6 +16,7 @@ import FreeDraw from "./views/free-draw.vue";
 import Cluster from "./views/cluster.vue";
 
 const routes = [
+  { path: "/", component: Home },
   { path: "/map", component: Map },
   { path: "/draw", component: Draw },
   { path: "/static", component: Static },
