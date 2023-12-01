@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { Map, View, Feature } from "ol";
 import ImageLayer from "ol/layer/Image";
 import ImageSource from "ol/source/ImageStatic";
@@ -16,6 +15,7 @@ import { Style, Icon } from "ol/style";
 import { Point } from "ol/geom";
 import { ref, onMounted } from "vue";
 import { getCenter } from "ol/extent";
+import zcBg from "../assets/zc.png";
 
 console.log(View);
 console.log(Map);
@@ -43,7 +43,7 @@ const initMap = () => {
 
   const imageLayer = new ImageLayer({
     source: new ImageSource({
-      url: "/src/assets/zc.png",
+      url: zcBg,
       imageExtent: extent,
       projection
     })

@@ -14,6 +14,7 @@ import RenderEvent from "ol/render/Event";
 import { Vector, XYZ } from "ol/source";
 import { Circle, Fill, Icon, Stroke, Style } from "ol/style";
 import { onBeforeUnmount, onMounted, ref } from "vue";
+import markIcon from "../assets/mark.png";
 
 const map = ref();
 const featureLayer = ref();
@@ -87,7 +88,7 @@ const addLayer = (trackLine: any) => {
       image: new Icon({
         anchor: [0.5, 1],
         scale: 0.4,
-        src: "/src/assets/mark.png"
+        src: markIcon
       })
     }),
     geoMarker: new Style({

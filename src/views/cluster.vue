@@ -12,6 +12,7 @@ import { transform } from "ol/proj";
 import { Cluster, Vector, XYZ } from "ol/source";
 import { Circle, Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { onMounted, ref } from "vue";
+import truckIcon from "../assets/truck.png";
 
 const map = ref();
 onMounted(() => {
@@ -79,7 +80,7 @@ const initCluster = () => {
       } else {
         style = new Style({
           image: new Icon({
-            src: "/src/assets/truck.png",
+            src: truckIcon,
             scale: 0.4
           })
         });

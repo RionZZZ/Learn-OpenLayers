@@ -29,6 +29,10 @@ import { Vector, XYZ } from "ol/source";
 import { Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
+import truckIcon from "../assets/truck.png";
+import truckIcon2 from "../assets/truck2.png";
+import startIcon from "../assets/start.png";
+import endIcon from "../assets/end.png";
 const map = ref();
 const featureLayer = ref();
 const passCoordinates = ref<Coordinate[]>([]);
@@ -112,19 +116,19 @@ const addLayer = (trackLine: any) => {
       image: new Icon({
         anchor: [0.5, 1],
         scale: 0.4,
-        src: "/src/assets/start.png"
+        src: startIcon
       })
     }),
     end: new Style({
       image: new Icon({
         anchor: [0.5, 1],
         scale: 0.4,
-        src: "/src/assets/end.png"
+        src: endIcon
       })
     }),
     geoMarker: new Style({
       image: new Icon({
-        src: "/src/assets/truck2.png"
+        src: truckIcon2
       })
     })
   };
@@ -186,55 +190,75 @@ const addTrack = () => {
   addLayer(trackLine);
 };
 
-const setStyle = (feature: Feature) =>
-  new Style({
-    image: new Icon({
-      anchor: [0.5, 30],
-      anchorXUnits: "fraction",
-      anchorYUnits: "pixels",
-      // scale: 0.4,
-      width: 50,
-      height: 50,
-      opacity: 0.8,
-      src: "/src/assets/truck.png"
-    }),
-    text: new Text({
-      //位置
-      textAlign: "center",
-      //基准线
-      textBaseline: "middle",
-      //文字样式
-      font: "normal 14px 微软雅黑",
-      //文本内容
-      text: feature.get("data").title,
-      //文本填充样式（即文字颜色）
-      fill: new Fill({ color: "#0f0" }),
-      stroke: new Stroke({ color: "#f00", width: 2 }),
-      offsetY: 35
-    })
+const setFeature = (point: Coordinate, data: any) => {
+  const feature = new Feature({
+    geometry: new Point(transform(point, "EPSG:4326", "EPSG:3857")),
+    data,
+    id: "truck"
   });
+  feature.setStyle(
+    new Style({
+      image: new Icon({
+        anchor: [0.5, 30],
+        anchorXUnits: "fraction",
+        anchorYUnits: "pixels",
+        // scale: 0.4,
+        width: 50,
+        height: 50,
+        opacity: 0.8,
+        src: truckIcon
+      }),
+      text: new Text({
+        //位置
+        textAlign: "center",
+        //基准线
+        textBaseline: "middle",
+        //文字样式
+        font: "normal 14px 微软雅黑",
+        //文本内容
+        text: data.title,
+        //文本填充样式（即文字颜色）
+        fill: new Fill({ color: "#0f0" }),
+        stroke: new Stroke({ color: "#f00", width: 2 }),
+        offsetY: 35
+      })
+    })
+  );
+  return feature;
+};
 
 const addPic = () => {
-  const feature1 = new Feature({
-    geometry: new Point(transform([114.3, 30.5], "EPSG:4326", "EPSG:3857")),
-    data: {
-      title: "鄂A88888",
-      tip: "开往武昌站的货车"
-    },
-    id: "truck"
-  });
-  const feature2 = new Feature({
-    geometry: new Point(transform([114.4, 30.6], "EPSG:4326", "EPSG:3857")),
-    data: {
+  const features = [
+    setFeature([114.3, 30.5], {
       title: "鄂A86686",
       tip: "开往武汉站的货车"
-    },
-    id: "truck"
-  });
-  feature1.setStyle(setStyle(feature1));
-  feature2.setStyle(setStyle(feature2));
-
-  const source = new Vector({ features: [feature1, feature2] });
+    }),
+    setFeature([114.4, 30.6], {
+      title: "鄂A86686",
+      tip: "开往武汉站的货车"
+    }),
+    setFeature([114.5, 30.6], {
+      title: "鄂A77563",
+      tip: "开往忻州的货车"
+    }),
+    setFeature([114.5, 30.2], {
+      title: "鄂A67823",
+      tip: "开往柳州的货车"
+    }),
+    setFeature([114.33, 30.11], {
+      title: "鄂A34551",
+      tip: "开往大兴的货车"
+    }),
+    setFeature([114.34, 30.22], {
+      title: "鄂A34111",
+      tip: "开往上户的货车"
+    }),
+    setFeature([114.51, 30.77], {
+      title: "鄂A12348",
+      tip: "开往崇州的货车"
+    })
+  ];
+  const source = new Vector({ features });
   const layer = new VectorLayer({ source });
   map.value.addLayer(layer);
 };
@@ -301,7 +325,7 @@ onBeforeUnmount(() => {
     min-height: 140px;
     padding: 10px 20px;
     background-color: #fff;
-    color: #333;
+    color: rgb(24, 11, 139);
   }
 }
 </style>

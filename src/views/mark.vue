@@ -12,6 +12,8 @@ import { Vector, XYZ } from "ol/source";
 import { Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { onMounted, ref } from "vue";
 
+import truckIcon from "../assets/truck.png";
+
 const map = ref();
 onMounted(() => {
   initMap();
@@ -42,7 +44,7 @@ const setStyle = (feature: Feature) =>
       scale: 0.4,
       opacity: 0.8,
       color: "#f00",
-      src: "/src/assets/truck.png"
+      src: truckIcon
     }),
     text: new Text({
       //位置

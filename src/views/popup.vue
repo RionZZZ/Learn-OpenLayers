@@ -12,6 +12,7 @@ import { transform } from "ol/proj";
 import { Vector, XYZ } from "ol/source";
 import { Fill, Icon, Stroke, Style, Text } from "ol/style";
 import { onBeforeUnmount, onMounted, ref } from "vue";
+import truckIcon from "../assets/truck.png";
 
 const map = ref();
 const popup = ref();
@@ -50,7 +51,7 @@ const setStyle = (feature: Feature) =>
       width: 50,
       height: 50,
       opacity: 0.8,
-      src: "/src/assets/truck.png"
+      src: truckIcon
     }),
     text: new Text({
       //位置
