@@ -134,13 +134,13 @@ const move = (evt: RenderEvent) => {
 
 const startMove = () => {
   startTime.value = new Date().getTime();
-  map.value.on("postcompose", move);
+  map.value.on("postrender", move);
   // 第一次需要手动调用一遍，否则不执行postcompose
   map.value.render();
 };
 
 const stopMove = () => {
-  map.value.un("postcompose", move);
+  map.value.un("postrender", move);
 };
 
 const addTrack = () => {
